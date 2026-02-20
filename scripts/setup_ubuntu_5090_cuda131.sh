@@ -76,7 +76,12 @@ export CUDA_HOME
 export PATH="${CUDA_HOME}/bin:${PATH}"
 export LD_LIBRARY_PATH="${CUDA_HOME}/lib64:${LD_LIBRARY_PATH:-}"
 export TORCH_CUDA_ARCH_LIST
-pip install -v .
+python - <<'PY'
+import torch
+print("torch available for build:", torch.__version__, "cuda:", torch.version.cuda)
+PY
+# setup.py imports torch extensions, so we must build in the active env.
+pip install -v --no-build-isolation .
 
 if [[ "${SKIP_DATA}" != "1" ]]; then
   echo "[6/7] Downloading model and sample data"
