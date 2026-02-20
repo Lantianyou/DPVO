@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.8)
 project(dpviewer)
 project(viewer LANGUAGES CUDA CXX)
 
-add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CUDA_STANDARD 17)
 

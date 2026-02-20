@@ -30,34 +30,43 @@ Lahav Lipson, Zachary Teed, Jia Deng<br/>
 }
 ```
 ## Setup and Installation
-The code was tested on Ubuntu 20/22 and Cuda 11/12.</br>
+The code was tested on Ubuntu 20/22/24 with CUDA 12.8 and Python 3.12.
 
 Clone the repo
 ```
 git clone https://github.com/princeton-vl/DPVO.git --recursive
 cd DPVO
 ```
-Create and activate the dpvo anaconda environment
-```
-conda env create -f environment.yml
-conda activate dpvo
-```
 
-Next install the DPVO package
+Download Eigen headers
 ```bash
 wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip
 unzip eigen-3.4.0.zip -d thirdparty
+```
 
-# install DPVO
-pip install .
+Install [uv](https://docs.astral.sh/uv/) (if not already installed)
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-# download models and data (~2GB)
+Create venv and install dependencies
+```bash
+uv sync
+```
+
+Build and install CUDA extensions
+```bash
+uv pip install . --no-build-isolation
+```
+
+Download models and data (~2GB)
+```bash
 ./download_models_and_data.sh
 ```
 
 
 ### Recommended - Install the Pangolin Viewer
-Note: You will need to have CUDA 11 and CuDNN installed on your system.
+Note: You will need to have CUDA and CuDNN installed on your system.
 
 1. Step 1: Install Pangolin (need the custom version included with the repo)
 ```
@@ -71,7 +80,7 @@ cd ../..
 
 2. Step 2: Install the viewer
 ```bash
-pip install ./DPViewer
+uv pip install ./DPViewer
 ```
 
 For installation issues, our [Docker Image](https://github.com/princeton-vl/DPVO_Docker) supports the visualizer.
@@ -96,11 +105,11 @@ cd ../..
 
 Step 3. Install the image retrieval
 ```bash
-pip install ./DPRetrieval
+uv pip install ./DPRetrieval
 ```
 
 ## Demos
-DPVO can be run on any video or image directory with a single command. Note you will need to have installed DPViewer to visualize the reconstructions in real-time. You can also save the completed reconstructions and view them in COLMAP. The pretrained models can be downloaded from google drive [models.zip](https://drive.google.com/file/d/1dRqftpImtHbbIPNBIseCv9EvrlHEnjhX/view?usp=sharing) if you have not already run the download script. 
+DPVO can be run on any video or image directory with a single command. Note you will need to have installed DPViewer to visualize the reconstructions in real-time. You can also save the completed reconstructions and view them in COLMAP. The pretrained models can be downloaded from google drive [models.zip](https://drive.google.com/file/d/1dRqftpImtHbbIPNBIseCv9EvrlHEnjhX/view?usp=sharing) if you have not already run the download script.
 
 
 ```bash
@@ -138,7 +147,7 @@ To run DPVO with a SLAM backend (i.e., DPV-SLAM), add
 ```
 to any `evaluate_X.py` script or to `demo.py`
 
-If installed, the classical backend can also be enabled using 
+If installed, the classical backend can also be enabled using
 ```
 --opts CLASSIC_LOOP_CLOSURE True
 ```

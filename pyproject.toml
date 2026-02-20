@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=75.0", "wheel", "torch>=2.10.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dpvo"
+version = "0.1.0"
+description = "Deep Patch Visual Odometry/SLAM"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.10.0",
+    "torchvision>=0.25.0",
+    "torch-scatter",
+    "tensorboard>=2.16",
+    "numba>=0.60",
+    "tqdm>=4.66",
+    "einops>=0.8",
+    "pypose>=0.7",
+    "kornia>=0.7",
+    "numpy>=1.26.4,<2.0",
+    "plyfile>=1.0",
+    "evo>=1.28",
+    "opencv-python>=4.9",
+    "yacs>=0.1.8",
+]
+
+[tool.setuptools.packages.find]
+include = ["dpvo*"]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
